@@ -436,7 +436,7 @@ WHERE " + schemaFilter("OBJECT_SCHEMA_NAME([s].[object_id])");
                 var tables = new List<DatabaseTable>();
                 Version.TryParse(connection.ServerVersion, out var serverVersion);
                 var supportsMemoryOptimizedTable = serverVersion?.Major >= 12;
-                var supportsTemporalTable = serverVersion?.Major >= 13;
+                var supportsTemporalTable = serverVersion?.Major >= 12;
 
                 var commandText = @"
 SELECT
@@ -543,7 +543,7 @@ LEFT JOIN [sys].[computed_columns] AS [cc] ON [c].[object_id] = [cc].[object_id]
 WHERE " + tableFilter;
 
                 if (Version.TryParse(connection.ServerVersion, out var serverVersion)
-                    && serverVersion.Major >= 13)
+                    && serverVersion.Major >= 12)
                 {
                     commandText += " AND [c].[is_hidden] = 0";
                 }
